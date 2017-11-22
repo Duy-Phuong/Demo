@@ -1,0 +1,8 @@
+LOAI CHI TIEU				NOI DUNG CHI				SO TIEN
+An uong					an sang					1000
+Di chuyen				an sang					1000
+Nha cua					tien nha					1000
+Xe co					bus					1000
+Nhu yeu pham				dau goi					1000
+Dich vu					internet					1000
+Dich vu					phu					1000

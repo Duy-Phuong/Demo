@@ -190,7 +190,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    HWND hWnd = CreateWindowW(szWindowClass, _T("QUẢN LÍ CHI TIÊU"), WS_OVERLAPPEDWINDOW,
-      300, 10, 825, 700, nullptr, nullptr, hInstance, nullptr);
+      300, 10, 825, 730, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -218,8 +218,11 @@ int vtx;
 GdiplusStartupInput gdiplusStartupInput;
 ULONG_PTR           gdiplusToken;
 Graphics* graphics;
+Graphics* graphics1;
+vector <SolidBrush*> SBrush;
 
-
+float x1;
+float pos = 270;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -416,12 +419,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		num11[3] = ((float)num3 / sum) * 750.0;
 		num11[4] = ((float)num4 / sum) * 750.0;
 		num11[5] = ((float)num5 / sum) * 750.0;
-		num11[6] = ((float)num6 / sum) * 750.0;//800 là chiều dài sum
+		num11[6] = ((float)num6 / sum) * 750.0;//750 là chiều dài sum
 
 		//luu lại %
 		for (int i = 1; i <= 6; i++)
 		{
 			phanTram[i] = (num11[i] * 100) / 750;
+			
 		}
 
 		/*
@@ -431,7 +435,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		=> số px lm chiều rộng chart
 		*/
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("An uong:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 70, 530, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Di chuyen:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 70, 560, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Nha cua:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 70, 590, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Xe co:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 210, 530, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Nhu yeu pham:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 210, 560, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Dich vu:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 210, 590, 80, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
 		
+		hwnd = CreateWindowEx(0, TEXT("STATIC"), TEXT("Biểu đồ chi tiêu:"), WS_CHILD | WS_VISIBLE | SS_LEFT, 350, 650, 100, 25, hWnd, NULL, hInst, NULL);
+		SendMessage(hwnd, WM_SETFONT, WPARAM(hFont), TRUE);
+
 		tx1 = CreateWindowEx(0, TEXT("EDIT"), TEXT(""), WS_CHILD | WS_VISIBLE | WS_BORDER, 40, 530, 30, 25, hWnd, NULL, hInst, NULL);
 		SendMessage(tx1, WM_SETFONT, WPARAM(hFont), TRUE);
 
@@ -461,24 +480,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SetWindowText(tx1, b1);
 
-		aa = (int)phanTram[2];
-		wsprintf(b1, L"%d %%", aa);
+		int aa1 = (int)phanTram[2];
+		wsprintf(b1, L"%d %%", aa1);
 
 		SetWindowText(tx2, b1);
-		aa = (int)phanTram[3];
-		wsprintf(b1, L"%d %%", aa);
+		int aa2 = (int)phanTram[3];
+		wsprintf(b1, L"%d %%", aa2);
 
 		SetWindowText(tx3, b1);
 
-		aa = (int)phanTram[4];
-		wsprintf(b1, L"%d %%", aa);
+		int aa3 = (int)phanTram[4];
+		wsprintf(b1, L"%d %%", aa3);
 
 		SetWindowText(tx4, b1);
 
-		aa = (int)phanTram[5];
-		wsprintf(b1, L"%d %%", aa);
+		int aa4 = (int)phanTram[5];
+		wsprintf(b1, L"%d %%", aa4);
 
 		SetWindowText(tx5, b1);
+		
+		phanTram[6] = 100 - (aa + aa1 + aa2 + aa3 + aa4);//so % còn lại
+	
 		aa = (int)phanTram[6];
 		wsprintf(b1, L"%d %%", aa);
 
@@ -728,28 +750,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				int aa = (int)phanTram[1];
-				wsprintf(b1, L"%d %%", aa);
+				wsprintf(b1, L"%d %%", aa);//de in kí tu % dung %%
 
 				SetWindowText(tx1, b1);
 
-				aa = (int)phanTram[2];
-				wsprintf(b1, L"%d %%", aa);
+				int aa1 = (int)phanTram[2];
+				wsprintf(b1, L"%d %%", aa1);
 
 				SetWindowText(tx2, b1);
-				aa = (int)phanTram[3];
-				wsprintf(b1, L"%d %%", aa);
+				int aa2 = (int)phanTram[3];
+				wsprintf(b1, L"%d %%", aa2);
 
 				SetWindowText(tx3, b1);
 
-				aa = (int)phanTram[4];
-				wsprintf(b1, L"%d %%", aa);
+				int aa3 = (int)phanTram[4];
+				wsprintf(b1, L"%d %%", aa3);
 
 				SetWindowText(tx4, b1);
 
-				aa = (int)phanTram[5];
-				wsprintf(b1, L"%d %%", aa);
+				int aa4 = (int)phanTram[5];
+				wsprintf(b1, L"%d %%", aa4);
 
 				SetWindowText(tx5, b1);
+
+				phanTram[6] = 100 - (aa + aa1 + aa2 + aa3 + aa4);//so % còn lại
+
 				aa = (int)phanTram[6];
 				wsprintf(b1, L"%d %%", aa);
 
@@ -764,6 +789,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				{
 					Draw(graphics, hdc1, i, num11[i], vtx, toadoy);
 					vtx += num11[i];
+				}
+				pos = 270;
+				for (int i = 0; i < 6; i++)
+				{
+					x1 = 360 * phanTram[i + 1] / 100;
+					graphics1->FillPie(SBrush[i], 300, 470, 180, 180, pos, x1);
+					pos += x1;
+					if (pos > 360)
+						pos -= 360;
 				}
 				InvalidateRect(hWnd, NULL, TRUE);
 
@@ -781,7 +815,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case ID_INFO:
 			{
 
-				MessageBox(NULL, L"1 màu xanh nhạt: An uong\n2 màu đỏ: Di chuyen\n3 màu da trời: Nha cua\n4 màu xanh lá cây: Xe co\n5 màu xanh da trời nhạt: Nhu yeu pham\n6 màu tím: Dich vu\n ", L"Chú thích ", MB_ICONINFORMATION);
+				MessageBox(NULL, L"Thông tin về biểu đồ\n các loại chi phí của người dùng ", L"Chú thích ", MB_ICONINFORMATION);
 			}
 			break;
             case IDM_ABOUT:
@@ -807,11 +841,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				vtx += num11[i];
 			}
 
-			for (int i = 1; i <= 6; i++)
-			{
-				Draw1(graphics, hdc, i);
-				vtx += num11[i];
-			}
+			//for (int i = 1; i <= 6; i++)
+			//{
+			//	Draw1(graphics, hdc, i);
+			//	vtx += num11[i];
+			//}
 			//them hinh
 
 			HDC hMemDC = CreateCompatibleDC(hdc);
@@ -820,11 +854,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			BitBlt(hdc, 300, 10, 720, 80, hMemDC, 0, 0, SRCCOPY);
 			::DeleteDC(hMemDC);
 			
-			HDC hMemDC1 = CreateCompatibleDC(hdc);
-			::SelectObject(hMemDC1, bitmap1);
-			BitBlt(hdc, 300, 490, 200, 200, hMemDC1, 0, 0, SRCCOPY);
-			::DeleteDC(hMemDC1);
+			//HDC hMemDC1 = CreateCompatibleDC(hdc);
+			//::SelectObject(hMemDC1, bitmap1);
+			//BitBlt(hdc, 300, 490, 200, 200, hMemDC1, 0, 0, SRCCOPY);
+			//::DeleteDC(hMemDC1);
 
+			graphics1 = new Graphics(hdc);
+
+
+			SBrush.push_back(new SolidBrush(Color(255, 255, 0)));
+			SBrush.push_back(new SolidBrush(Color(255, 0, 0)));
+			SBrush.push_back(new SolidBrush(Color(30, 144, 255)));
+			SBrush.push_back(new SolidBrush(Color(0, 255, 0)));
+			SBrush.push_back(new SolidBrush(Color(0, 255, 255)));
+			SBrush.push_back(new SolidBrush(Color(0, 128, 0)));
+
+
+		int tempy = 515;
+		int x = -15;
+		for (int i = 0; i < 6; i++)
+		{
+			if (i >= 3)
+			{
+				x = 125;
+				if(i == 3)
+					tempy = 515;
+			}
+			graphics1->FillPie(SBrush[i], x, tempy, 50, 50, 337.5, 45);
+			tempy += 32;
+		}
+		pos = 270;
+		for (int i = 0; i < 6; i++)
+		{
+			x1 = 360 * phanTram[i+1] / 100;
+			if (i == 5)
+			{
+				x1 = 360 - ( 360 * phanTram[1] / 100 + 360 * phanTram[2] / 100 + 360 * phanTram[3] / 100+ 360 * phanTram[4] / 100 + 360 * phanTram[5] / 100);
+			}
+			graphics1->FillPie(SBrush[i], 300, 470, 180, 180, pos, x1);
+			pos += x1;
+			if (pos > 360)
+				pos -= 360;
+		}
             EndPaint(hWnd, &ps);
         }
         break;
@@ -907,8 +978,8 @@ void Draw(Graphics* graphics, HDC hdc, int num, int width, int toadox, int toado
 
 		HatchBrush* myHatchBrush = new HatchBrush(
 			HatchStyleCross,
-			Color(255, 169, 244, 1),
-			Color(255, 169, 244, 1));
+			Color(255, 255, 255, 0),
+			Color(255, 255, 255, 0));
 
 		graphics->FillRectangle(myHatchBrush, toadox, toadoy, width, 25);
 	}
@@ -929,8 +1000,8 @@ void Draw(Graphics* graphics, HDC hdc, int num, int width, int toadox, int toado
 
 		HatchBrush* myHatchBrush = new HatchBrush(
 			HatchStyleCross,
-			Color(255, 0, 0, 255),
-			Color(255, 0, 0, 255));
+			Color(255, 30, 144, 255),
+			Color(255, 30, 144, 255));
 
 		graphics->FillRectangle(myHatchBrush, toadox, toadoy, width, 25);
 	}
@@ -963,8 +1034,8 @@ void Draw(Graphics* graphics, HDC hdc, int num, int width, int toadox, int toado
 
 		HatchBrush* myHatchBrush = new HatchBrush(
 			HatchStyleCross,
-			Color(255, 255, 0, 255),
-			Color(255, 255, 0, 255));
+			Color(255, 0, 128, 0),
+			Color(255, 0, 128, 0));
 
 
 		graphics->FillRectangle(myHatchBrush, toadox, toadoy, width, 25);
@@ -974,7 +1045,7 @@ void Draw(Graphics* graphics, HDC hdc, int num, int width, int toadox, int toado
 	delete pen;
 	delete graphics;
 }
-
+//vẽ ô vuông chú thích nhưng sau này k cần nữa
 void Draw1(Graphics* graphics, HDC hdc, int num)
 {
 	graphics = new Graphics(hdc);
