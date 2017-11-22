@@ -1,0 +1,9 @@
+LOAI CHI TIEU				NOI DUNG CHI				SO TIEN
+An uong					an sang					1000
+Di chuyen				bus					2000
+Nha cua					tien tro					5000
+Xe co					sua xe					8000
+Nhu yeu pham				dau goi					8000
+Dich vu					internet					24000
+Nhu yeu pham				dau					1000
+An uong					an trua					6000

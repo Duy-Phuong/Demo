@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://schemas.microsoft.com/windows/2009/Ribbon">
+  <Application.Commands>
+    
+    <Command Name="cmdTabShape" Comment="Tab Shapes">
+      <Command.LabelTitle>
+        <String Id="200">Shapes</String>
+      </Command.LabelTitle>
+    </Command>
+      
+    <Command Name ="cmdGroup1">
+      <Command.LabelTitle>
+        <String Id ="210">Draw</String>
+      </Command.LabelTitle>
+    </Command>
+    <Command Name="cmdLine" Symbol="ID_BTN_LINE" LabelTitle="DRAW LINE" Id="30000">
+      <Command.LargeImages>
+        <Image Id="201">Images/SolidLine.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdEllipse" Symbol="ID_BTN_ELLIPSE" LabelTitle="DRAW ELLIPSE" Id="30001">
+      <Command.LargeImages>
+        <Image Id="202">Images/Circle.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdRect" Symbol="ID_BTN_RECT" LabelTitle="DRAW RECTANGLE" Id="30002" >
+      <Command.LargeImages>
+        <Image Id="203">Images/BSHollow.png</Image>
+      </Command.LargeImages>
+    </Command>
+  </Application.Commands>
+
+  <Application.Views>
+    <Ribbon>
+      <Ribbon.Tabs>
+        <Tab CommandName="cmdTabShape">
+          <!-- nhóm 1-->
+          <Tab.ScalingPolicy>
+            <ScalingPolicy>
+              <ScalingPolicy.IdealSizes>
+                <Scale Group="cmdGroup1" Size="Large" />
+              </ScalingPolicy.IdealSizes>
+            </ScalingPolicy>
+          </Tab.ScalingPolicy>
+          <Group CommandName="cmdGroup1" SizeDefinition="ThreeButtons">
+
+            <ToggleButton CommandName="cmdLine" />
+            <ToggleButton CommandName="cmdEllipse" />
+            <ToggleButton CommandName="cmdRect" />
+
+          </Group>
+
+
+        </Tab>
+        <!--<Tab>
+          --><!-- nhóm 2--><!--
+          <Tab.ScalingPolicy>
+            <ScalingPolicy>
+              <ScalingPolicy.IdealSizes>
+                <Scale Group="cmdGroup2" Size="Large" />
+              </ScalingPolicy.IdealSizes>
+            </ScalingPolicy>
+          </Tab.ScalingPolicy>
+          <Group CommandName="cmdGroup2" SizeDefinition="OneButton">
+
+            <Button CommandName="cmdEllipse" />
+          </Group>
+
+
+        </Tab>-->
+      </Ribbon.Tabs>
+    </Ribbon>
+  </Application.Views>
+</Application>
+
+
