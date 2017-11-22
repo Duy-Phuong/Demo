@@ -1,0 +1,12 @@
+https://www.mindstick.com/Articles/949/how-to-add-a-right-click-context-menu-to-the-tray-icon
+https://www.youtube.com/watch?v=-6bvqwVYwMY
+vào program.cs coi form chính
+wrap  = false vs scroll bar both ms có 2 thanh
+
+http://info24h.vn/lap-trinh-xu-ly-giao-dien-trong-winform-voi-c-183.html
+
+goi ý
+http://iceteaviet.blogspot.com/2015/07/chuc-nang-autocomplete-cua-textbox.html
+http://iceteaviet.blogspot.com/2015/07/chuc-nang-autocomplete-cua-textbox.html
+
+https://www.youtube.com/watch?v=7PCDouzmliM
